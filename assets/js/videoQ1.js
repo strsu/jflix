@@ -1,7 +1,7 @@
 'use strict';
 
 const ip = "localhost";
-const baseUrl = 'http://'+ip+':5000/media/Avengers1/'; //'http://'+ip+':5000/media/mp4/';
+const baseUrl = 'http://'+ip+':5020/Avengers1/'; //'http://'+ip+':5000/media/mp4/';
 let mdp = baseUrl + 'avengers1.mdp';
 let video = document.getElementsByClassName('video')[0];
 
