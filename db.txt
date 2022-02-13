@@ -1,0 +1,18 @@
+create table movie(
+	openYear varchar(10),
+	code varchar(10),
+	title varchar(100),
+	genre varchar(100),
+	nation varchar(100),
+	runningTime varchar(10),
+	age varchar(10),
+	openDate varchar(50),
+	rate varchar(5),
+	participate varchar(10),
+	directors varchar(50),
+	actors varchar(200),
+	story TEXT
+)
+ENGINE=InnoDB
+DEFAULT CHARSET=utf8
+COLLATE=utf8_general_ci;

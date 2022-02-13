@@ -1,0 +1,1226 @@
+@import url(fontawesome-all.min.css);
+@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,700,900");
+
+/*
+	Phantom by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+*/
+
+html, body, div, span, applet, object,
+iframe, h1, h2, h3, h4, h5, h6, p, blockquote,
+pre, a, abbr, acronym, address, big, cite,
+code, del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var, b,
+u, i, center, dl, dt, dd, ol, ul, li, fieldset,
+form, label, legend, table, caption, tbody,
+tfoot, thead, tr, th, td, article, aside,
+canvas, details, embed, figure, figcaption,
+footer, header, hgroup, menu, nav, output, ruby,
+section, summary, time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+
+body {
+	line-height: 1;
+	/*overflow: hidden; /* 스크롤 안보이게 */
+	background-color: black;
+	-ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+body::-webkit-scrollbar{
+	display: none; /* Chrome, Safari, Opera*/
+}
+
+ol, ul {
+	padding: 0px;
+    margin: 0px;
+    list-style-type: none;
+    margin-block: 0px;
+    margin-inline: 0px;
+    padding-inline-start: 0px;
+}
+
+div {
+	display: block;
+}
+
+#root {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	padding: 0 0 0 240px;
+	flex-direction: column;
+}
+
+.navBar {
+	position: fixed;
+	width: 240px;
+	height: 100%;
+	top: 0;
+	left: 0;
+	list-style-type: none;
+	background-color: #191a1c;
+}
+
+.navBar section {
+	padding: 0 16px;
+}
+
+
+.navBar ul{
+	display: flex;
+	align-content: flex-start;
+	flex-direction: column;
+	flex-wrap: wrap;
+}
+
+.navBar li a{
+	outline: rgb(0, 0, 0);
+	text-decoration: none;
+	color: rgb(255, 255, 255);
+}
+
+.logo img {
+	vertical-align: top;
+	width: 144px;
+	height: 80px;
+}
+
+.navSection li {
+	padding: 8px 12px;
+	border: 0;
+	width: 100%;
+	font-size: 12pt;
+	font-weight: 400;
+	color: #d4d7db;
+}
+
+.navTop {
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 500;
+	width: 100%;
+	padding: 0 0 0 240px;
+}
+
+.navTop .nav_top {
+	display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    position: relative;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    width: 100%;
+    height: 56px;
+    padding: 12px 40px;
+    background: transparent;
+    -webkit-transition: background-color 300ms;
+    transition: background-color 300ms;
+}
+
+.navTop .nav_scroll {
+	display: flex;
+    position: relative;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    align-items: center;
+    width: 100%;
+    height: 56px;
+    padding: 12px 40px;
+    background: rgb(20, 21, 23);
+    transition: background-color 300ms ease 0s;
+}
+
+.navSearchBox {
+	position:relative;
+	background: rgba(0,0,0,0.5);
+	width: 337;
+	padding: 8px 12px;
+	border-radius: 8px;
+}
+
+.navSearchBox input[type="text"] {
+	background: transparent;
+	color: #fff;
+	padding: 0;
+	border: 0;
+	outline: none;
+	margin: 0;
+	appearance: none;
+	font-size: 15px;
+	font-weight: 400;
+	letter-spacing: 0px;
+	line-height: 20px;
+}
+
+.mediaView {
+	flex: 1;
+	background: #000;
+}
+
+.imagesArea {
+	position: relative;
+	padding-bottom: 46%;
+	overflow: hidden;
+}
+
+.images {
+	position: absolute;
+	top: 0;
+	right: 0;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+
+.images span {
+	inset: 0px;
+	position: absolute;
+	display: inline-block;
+	background-size: cover;
+	background-image: url("../../images2/1.jpg");
+	background-position: center center;
+	background-repeat: no-repeat;
+	opacity: 1;
+}
+
+.videosArea {
+	overflow-x: hidden;
+	position: relative;
+	z-index: 210;
+	padding: 1.6vw 0;
+	margin-top: -8.9vw;
+}
+
+
+/* 비디오 영역 */
+
+*, ::before, ::after {
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+}
+
+li {
+    text-align: -webkit-match-parent;
+}
+
+.videoTitle {
+	padding: 0 4%;
+    margin-bottom: 0.7vw;
+	color: #fff;
+	font-weight: 800;
+}
+
+.videoTitle h3 {
+	font-size: 1.48vw;
+	letter-spacing: -0.03125vw;
+    line-height: 2.03125vw;
+    width: 90%;
+}
+
+.lineVideo {
+	position: relative;
+}
+
+.lineVideo a {
+	position: absolute;
+	top: 0.5vw;
+	right: 4%;
+	font-size: 1.09vw;
+    font-weight: 500;
+	letter-spacing: -0.039vw;
+    line-height: 1.25vw;
+	text-decoration: none;
+	color: rgba(255,255,255,0.5);
+}
+
+.videoRow {
+	display: block;
+	position: relative;
+	white-space: nowrap;
+	padding-left: 4%;
+	padding-right: 4%;
+	overflow-x: visible;
+}
+
+.eachVideo {
+	display: inline-block;
+	position: relative;
+	vertical-align: top;
+	/* vertical-align: middle;  이렇게 해야 요소가 확대될 때 중간에서 위아래 동일한 크기로 커진다.*/
+	cursor: pointer;
+	transition-delay: 0.5s;
+	transition-duration: 0.3s;
+	transition-timing-function: ease-in;
+	/* width: 25%; /* 나중에 반응형으로 변경 해야함 */
+}
+
+
+/* 이렇게 하면 제목을 숨길 수 있다. */
+.eachVideo:hover .thumbnailTitle {
+	display: none;
+}
+
+.videoCol {
+	display: block;
+	z-index: 3;
+	margin-bottom: 1.56vw; /* 반응형임 */
+}
+
+.thumbnail {
+	position: relative; /* 이거 없으면 span 에서 이미지 상자에 안 맞는다. */
+	background-color: #fff;
+	width: 100%;
+	padding: 28.125% 0;
+	overflow: hidden;
+}
+
+.thumbnail span {
+	display: inline-block;
+	position: absolute;
+	inset: 0px;
+	background-size: cover;
+	background-position: center center;
+	background-repeat: no-repeat;
+	opacity: 1;
+}
+
+.thumbnailTitle {
+	white-space:pre-line;
+	padding-top:0.29vw;
+	margin-top: -10px;
+	color: #fff;
+}
+
+/*
+ 부모는 relative로 하고
+ 자식은 absolute로 해야 부모의 영역으로 고정
+*/
+
+.lineMoving {
+	transition-duration: 1s;
+}
+
+.lineMoving:hover {
+	color: rgb(185, 29, 29);
+}
+
+.videoInfo {
+	width: 100%;
+	height: 100%;
+	display: none;
+	position: absolute;
+	top: 0;
+	color: #FFF;
+	background-color: rgba(0,0,0,0.5);
+    text-align: center; /* div 전체를 가운데 정렬*/
+}
+
+/* 마우스가 올라가면 비디오 정보 표시 */
+.eachVideo:hover .videoInfo {
+	display: block;
+}
+
+.videoInfo #tar {
+	margin: 2em auto 0em auto;
+    position: relative;
+	max-height: 40%;
+	min-height: 40%;
+	/* display:flex 일 때 아래처럼 해야 중앙정렬 */
+	/*align-items: center;
+  	justify-content: center;*/
+    transition-delay: 0.5s;
+    transition-duration: 0.3s;
+    opacity: 0.0;   /* 아 opacity로 하면 지연 넣을 수 있다.*/
+}
+
+.videoInfo:hover #tar {
+    opacity: 1.0;
+}
+
+.videoInfo #videoPlay {
+	display: inline-block;
+	position: relative;
+	background: url( "../../images2/mainPlay.png" ) no-repeat;
+	background-size: cover;
+	background-position: center center;
+	background-repeat: no-repeat;
+	opacity: 1;
+	width: 32px;
+    height: 32px;
+}
+
+.videoInfo #videoAdd {
+	display: inline-block;
+	position: relative;
+	background: url( "../../images2/mainAddB.png" ) no-repeat;
+	background-size: cover;
+	background-position: center center;
+	background-repeat: no-repeat;
+    width: 32px;
+    height: 32px;
+}
+
+.videoInfo #videoAdd:hover {
+	background: url( "../../images2/mainAdd.png" ) no-repeat;
+}
+
+.videoInfo #story {
+	position: relative;
+	max-height: 20%;
+	min-height: 20%;
+    transition-delay: 0.5s;
+    transition-duration: 0.3s;
+    opacity: 0.0;
+}
+
+.videoInfo #moreInfo {
+	position: relative;
+	max-height: 10%;
+	min-height: 10%;
+    transition-delay: 0.5s;
+    transition-duration: 0.3s;
+    opacity: 0.0;
+}
+
+.videoInfo:hover #story {
+    opacity: 1.0;
+}
+
+.videoInfo:hover #moreInfo {
+    opacity: 1.0;
+}
+
+
+.videoInfo #moreInfo span:hover {
+	background-image: url("../../images2/mainMore.png");
+	background-repeat: no-repeat;
+}
+
+.videoInfo #moreInfo span{
+	position: relative;
+	display: inline-block;
+	background-size: contain;
+	background-image: url("../../images2/mainMore2.png");
+	background-position: center center;
+	background-repeat: no-repeat;
+	opacity: 1;
+	width: 100px;
+	height: 10%;
+}
+
+
+.videoInfo #tar_tar {
+	display: inline-block;
+	margin: 0 1em 0 1em;
+    max-width: 45%;
+}
+
+.videoInfo #tar_t {
+	display: block;
+	font-size: 11pt;
+	font-weight: 700;
+    white-space:pre-line;
+}
+
+.videoInfo #tar_ar {
+	display: block;
+	font-size: 9pt;
+	color: rgba(218, 214, 214, 0.733);
+}
+
+.videoInfo #story {
+	overflow: hidden;
+	white-space: inherit;
+	text-overflow: ellipsis;
+	width: 80%;
+	margin: 0 auto;
+}
+
+.videoArea {
+	display: flex;
+    position: absolute;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    background-color: rgb(0, 0, 0);
+    width: calc(100% - 0em);
+    height: 100%;
+}
+
+.moveLeft {
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: contain;
+
+	display: inline-block;
+    position: absolute;
+    top: 0px;
+    z-index: 200;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    box-sizing: border-box;
+    width: 4%;
+    height: 70%;
+    cursor: pointer;
+    left: 0px;
+    padding-right: 0.3125vw;
+}
+
+.moveRight {
+	
+	background-color: transparent;
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: contain;
+
+	display: inline-block;
+    position: absolute;
+    top: 0;
+    z-index: 200;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    box-sizing: border-box;
+    width: 4%;
+    height: 70%;
+    cursor: pointer;
+    right: 0;
+    padding-left: 0.3125vw;
+}
+
+.moveLeft:hover {
+	background-image: url('../../images2/left.png');
+}
+
+.moveRight:hover {
+	background-image: url('../../images2/right.png');
+}
+
+.detail {
+	display: none;
+	position: relative;
+    background: #000;
+    height: 35.15vw;
+    padding-left: 4%;
+    border-top: 1px solid #191a1c;
+    border-bottom: 1px solid #191a1c;
+    /*opacity: 0.01;  나중에 이거 활성화! */
+    -webkit-transition: height 0.54s cubic-bezier(0.5,0,0.1,1) 0s, opacity 0.44s cubic-bezier(0.5,0,0.1,1) 0.1s;
+    transition: height 0.54s cubic-bezier(0.5,0,0.1,1) 0s, opacity 0.44s cubic-bezier(0.5,0,0.1,1) 0.1s;
+}
+
+.detail .enter-done {
+    height: 35.15vw;
+    opacity: 1;
+}
+
+.detail .detailEnter {
+	position: relative;
+	height: 100%;
+	width: 100%;
+}
+
+.detail .detailContent {
+	position: relative;
+	height: 100%;
+	width: 100%;
+}
+
+.detail .detailImage {
+	position: absolute;
+    top: 0px;
+    right: 0px;
+    z-index: 100;
+    width: 61.5625%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.detail .detailImage .detailImage_background {
+	position: absolute;
+    inset: -2px 0px 0px 2px;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+.detail .detailImage .detailImage_hole {
+	position: absolute;
+    inset: 0px;
+    opacity: 0;
+    transition: opacity 0.3s cubic-bezier(0.5, 0, 0.1, 1) 0s;
+}
+.detail .detailImage .detailImage_left {
+	position: absolute;
+    top: 0px;
+    left: 0px;
+    background-image: linear-gradient(to right, rgb(0, 0, 0) 3%, rgba(0, 0, 0, 0.7) 26%, rgba(0, 0, 0, 0.45) 50%, rgba(0, 0, 0, 0.2) 75%, rgba(0, 0, 0, 0) 100%);
+    width: 45.6852%;
+    height: 100%;
+}
+
+.detail .detailExit {
+	display: flex;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: auto;
+    z-index: 102;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    width: 4.76562vw;
+    height: 4.76562vw;
+    cursor: pointer;
+}
+
+.detail .detailExit .detailExit_img {
+	display: inline-block;
+    width: 2.5vw;
+    height: 2.5vw;
+}
+
+.detail .detailInfo {
+	position: relative;
+    z-index: 101;
+    padding-top: 1.71875vw;
+}
+
+.detail .detailInfo .detailInfo_title {
+	display: inline-block;
+    vertical-align: bottom;
+    width: auto;
+    height: 3vw;
+	color: white;
+	font-weight: 900;
+	font-size: 14pt;
+	margin-top: 0.5em;
+}
+
+.detail .detailInfo .detailInfo_cool {
+	display: inline-block;
+    position: relative;
+    background-color: rgb(20, 21, 23);
+    text-align: left;
+    height: 2.42188vw;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 2px;
+    cursor: pointer;
+    vertical-align: top;
+    width: 19.5312vw;
+    margin: 0.722656vw 0px 0px 0.859375vw;
+}
+
+.detail .detailInfo .detailInfo_cool .detailInfo_cool_menu {
+	width: 100%;
+    height: 100%;
+}
+
+.detail .detailInfo .detailInfo_cool 
+.detailInfo_cool_menu .detailInfo_cool_menu_1 {
+	display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding-right: 0.390625vw;
+    padding-left: 0.78125vw;
+    transition: color 0.5s ease 0s;
+}
+
+.detail .detailInfo .detailInfo_cool 
+.detailInfo_cool_menu .detailInfo_cool_menu_2 {
+	position: absolute;
+    left: -1px;
+    z-index: 999;
+    background-color: rgb(20, 21, 23);
+    box-sizing: content-box;
+    width: 100%;
+    max-height: 18.75vw;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-bottom-right-radius: 2px;
+    border-bottom-left-radius: 2px;
+    overflow-y: auto;
+    display: none;
+}
+
+.detail .detailInfo .detailInfo_cool 
+.detailInfo_cool_menu .detailInfo_cool_menu_1
+.detailInfo_cool_menu_1t {
+	color: rgba(255, 255, 255, 0.7);
+    font-size: 1.09375vw;
+    font-weight: 700;
+    letter-spacing: -0.015625vw;
+    line-height: 1.71875vw;
+}
+
+.detail .detailInfo .detailInfo_cool 
+.detailInfo_cool_menu .detailInfo_cool_menu_1
+.detailInfo_cool_menu_1s {
+	display: inline-block;
+    width: 1.95312vw;
+    height: 1.95312vw;
+}
+
+.detail .detailInfo .detailInfo_cool 
+.detailInfo_cool_menu .detailInfo_cool_menu_2
+.detailInfo_cool_menu_2t {
+	color: rgb(102, 102, 102);
+    font-size: 1.09375vw;
+    font-weight: 700;
+    letter-spacing: -0.015625vw;
+    line-height: 1.71875vw;
+    padding: 0.234375vw 0.78125vw;
+}
+
+.detail .detailInfo .detailInfo_rate {
+	font-size: 1.25vw;
+    margin: 1.09375vw 0px 0.625vw;
+}
+
+.detail .detailInfo .detailInfo_rate
+.detailInfo_rate_total {
+	display: inline-block;
+    vertical-align: top;
+}
+
+.detail .detailInfo .detailInfo_rate
+.detailInfo_rate_total .detailInfo_rate_net {
+	display: inline-block;
+    position: relative;
+    vertical-align: top;
+    line-height: 1;
+    padding-right: 2.57812vw;
+    border: 0.078125vw solid rgb(255, 255, 255);
+}
+
+.detail .detailInfo .detailInfo_rate
+.detailInfo_rate_total .detailInfo_rate_net
+.detailInfo_rate_net_t {
+    display: inline-block;
+    color: rgb(255, 255, 255);
+    padding: 0.078125vw 0.625vw 0.234375vw 0.546875vw;
+    font-size: 0.9375vw;
+    font-weight: 700;
+    letter-spacing: -0.046875vw;
+    line-height: 1.40625vw;
+}
+
+.detail .detailInfo .detailInfo_rate
+.detailInfo_rate_total .detailInfo_rate_net
+.detailInfo_rate_net_r {
+	position: absolute;
+    top: -0.078125vw;
+    right: -0.078125vw;
+    bottom: -0.078125vw;
+    background-color: rgb(255, 255, 255);
+    color: rgb(18, 18, 24);
+    font-family: Roboto, sans-serif;
+    text-align: center;
+    width: 2.65625vw;
+    font-size: 1.17188vw;
+    font-weight: 700;
+    letter-spacing: -0.0078125vw;
+    line-height: 2.03125vw;
+}
+
+.detail .detailInfo .detailInfo_rate
+.detailInfo_rate_total .detailInfo_rate_par {
+	display: inline-block;
+    position: relative;
+    vertical-align: top;
+    line-height: 1;
+    padding-right: 3.57812vw;
+    border: 0.078125vw solid rgb(255, 255, 255);
+}
+
+.detail .detailInfo .detailInfo_rate
+.detailInfo_rate_total .detailInfo_rate_par
+.detailInfo_rate_par_t {
+    display: inline-block;
+    color: rgb(255, 255, 255);
+    padding: 0.078125vw 0.625vw 0.234375vw 0.546875vw;
+    font-size: 0.9375vw;
+    font-weight: 700;
+    letter-spacing: -0.046875vw;
+    line-height: 1.40625vw;
+}
+
+.detail .detailInfo .detailInfo_rate
+.detailInfo_rate_total .detailInfo_rate_par
+.detailInfo_rate_par_r {
+	position: absolute;
+    top: -0.078125vw;
+    right: -0.078125vw;
+    bottom: -0.078125vw;
+    background-color: rgb(255, 255, 255);
+    color: rgb(18, 18, 24);
+    font-family: Roboto, sans-serif;
+    text-align: center;
+    width: 3.65625vw;
+    font-size: 1.17188vw;
+    font-weight: 700;
+    letter-spacing: -0.0078125vw;
+    line-height: 2.03125vw;
+}
+
+.detail .detailInfo .detailInfo_rate
+.detailInfo_rate_ageEpisode {
+	display: inline-block;
+    color: rgba(255, 255, 255, 0.7);
+    vertical-align: 0.234375vw;
+    font-size: 1.09375vw;
+    font-weight: 700;
+    letter-spacing: -0.046875vw;
+    line-height: 1.5625vw;
+}
+
+.detail .detailInfo .detailInfo_sdaf {
+    position: relative;
+    z-index: 101;
+}
+
+.detail .detailInfo .detailInfo_sdaf
+.detailInfo_sdaf_s {
+	color: rgba(255, 255, 255, 0.8);
+    width: 32.8125vw;
+    max-height: 10vh;
+    margin-top: 0.15625vw;
+    font-size: 1.17188vw;
+    font-weight: 400;
+    letter-spacing: -0.03125vw;
+    line-height: 1.875vw;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+.detail .detailInfo .detailInfo_sdaf
+.detailInfo_sdaf_daf {
+	letter-spacing: -0.03125vw;
+    margin-top: 0.9375vw;
+}
+
+.detail .detailInfo .detailInfo_sdaf
+.detailInfo_sdaf_daf .detailInfo_sdaf_daf_li {
+	color: rgba(255, 255, 255, 0.5);
+    font-size: 1.01562vw;
+    line-height: 1.40625vw;
+    margin-bottom: 0.15625vw;
+}
+
+.detail .detailInfo .detailInfo_sdaf
+.detailInfo_sdaf_daf .detailInfo_sdaf_daf_li 
+.detailInfo_sdaf_daf_l{
+	font-weight: 700;
+    margin-right: 0.78125vw;	
+}
+
+.detail .detailInfo .detailInfo_sdaf
+.detailInfo_sdaf_daf .detailInfo_sdaf_daf_li 
+.detailInfo_sdaf_daf_r{
+	position: relative;
+    z-index: 101;
+    font-weight: 400;	
+}
+
+.detail .detailInfo .detailInfo_sdaf
+.detailInfo_sdaf_ptws {
+	display: flex;
+    position: relative;
+    z-index: 101;
+    -webkit-box-align: center;
+    align-items: center;
+    box-sizing: border-box;
+    max-width: 100%;
+    margin-top: 1.5625vw;
+}
+
+.detail .detailInfo .detailInfo_sdaf
+.detailInfo_sdaf_ptws .detailInfo_sdaf_ptws_p {
+	position: initial;
+    background-color: rgb(248, 47, 98);
+    color: rgb(255, 255, 255);
+    border-radius: 0.3125vw;
+    font-size: 1.25vw;
+    font-weight: 700;
+    letter-spacing: -0.03125vw;
+    line-height: 1.95312vw;
+    padding: 0.546875vw 1.40625vw 0.625vw 1.25vw;
+    margin-right: 0.46875vw;
+}
+
+
+.detail .detailInfo .detailInfo_sdaf
+.detailInfo_sdaf_ptws .detailInfo_sdaf_ptws_t {
+    position: relative;
+    background-color: rgba(255, 255, 255, 0.09);
+    color: rgb(255, 255, 255);
+    padding: 0.3125vw 1.17188vw 0.234375vw 0.9375vw;
+    border-radius: 0.3125vw;
+    margin-right: 1.32812vw;
+    cursor: pointer;
+}
+
+.detail .detailInfo .detailInfo_sdaf
+.detailInfo_sdaf_ptws .detailInfo_sdaf_ptws_t
+.detailInfo_sdaf_ptws_t1 {
+    display: inline-block;
+    font-size: 1.25vw;
+    letter-spacing: -0.003125vw;
+    line-height: 1.875vw;
+    padding: 0.3125vw 0px 0.390625vw;
+}
+
+
+.detail .detailInfo .detailInfo_sdaf
+.detailInfo_sdaf_ptws .detailInfo_sdaf_ptws_w {
+    margin-right: 0.390625vw;
+}
+
+.detail .detailInfo .detailInfo_sdaf
+.detailInfo_sdaf_ptws .detailInfo_sdaf_ptws_w
+.detailInfo_sdaf_ptws_w_b {
+    display: inline-flex;
+    position: relative;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    color: rgba(255, 255, 255, 0.5);
+    box-sizing: border-box;
+    max-width: 100%;
+    padding: 0.625vw 0.3125vw 0.625vw 0.234375vw;
+    font-size: 1.25vw;
+    font-weight: 700;
+    letter-spacing: -0.03125vw;
+    line-height: 1.79687vw;
+}
+
+.detail .detailInfo .detailInfo_sdaf
+.detailInfo_sdaf_ptws .detailInfo_sdaf_ptws_w
+.detailInfo_sdaf_ptws_w_b 
+input[type="button"], input[type="submit"], button {
+	cursor: pointer;
+    border: 0px none transparent;
+    outline: none 0px;
+    background: none;
+    appearance: initial;
+    padding: 0px;
+}
+
+
+.detail .detailInfo .detailInfo_sdaf
+.detailInfo_sdaf_ptws .detailInfo_sdaf_ptws_s {
+	margin-right: 0.46875vw;
+}
+
+
+.detail .detailInfo .detailInfo_sdaf
+.detailInfo_sdaf_myrate {
+	display: flex;
+    position: relative;
+    z-index: 100;
+    margin-top: 1.40625vw;
+}
+
+.detail .detailInfo .detailInfo_sdaf
+.detailInfo_sdaf_myrate .detailInfo_sdaf_myrate_already {
+	color: rgba(255, 255, 255, 0.7);
+    width: 11.7188vw;
+    font-size: 1.09375vw;
+    font-weight: 700;
+    letter-spacing: -0.03125vw;
+    line-height: 1.5625vw;
+}
+
+.detail .detailInfo .detailInfo_sdaf
+.detailInfo_sdaf_myrate .detailInfo_sdaf_myrate_star {
+	line-height: 1em;
+    text-align: center;
+    user-select: none;
+    font-size: 1.5625vw;
+}
+
+.detail .detailInfo .detailInfo_sdaf
+.detailInfo_sdaf_myrate .detailInfo_sdaf_myrate_star_ {
+	display: inline-block;
+    position: relative;
+    cursor: pointer;
+}
+
+.detail .detailInfo .detailInfo_sdaf
+.detailInfo_sdaf_myrate .detailInfo_sdaf_myrate_star
+.detailInfo_sdaf_myrate_star_empty {
+	color: rgb(255, 255, 255);
+}
+
+.detail .detailInfo .detailInfo_sdaf
+.detailInfo_sdaf_myrate .detailInfo_sdaf_myrate_star
+.detailInfo_sdaf_myrate_star_full {
+	position: absolute;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.detail .detaileMenu {
+	position: absolute;
+    bottom: 0px;
+    left: 0px;
+    z-index: 102;
+    text-align: center;
+    width: 100%;
+}
+
+.detail .detaileMenu
+.detaileMenu_click {
+    display: inline-block;
+    padding-bottom: 0.46875vw;
+    border-color: rgba(255, 255, 255, 0.7) rgba(255, 255, 255, 0.7) rgb(255, 255, 255);
+    margin: 0px 2.1875vw;
+    cursor: pointer;
+    font-size: 1.25vw;
+    font-weight: 700;
+    letter-spacing: -0.0390625vw;
+    line-height: 1.71875vw;
+    color: rgb(255, 255, 255);
+    border-bottom-width: 4px;
+    border-bottom-style: solid;
+}
+
+.detail .detaileMenu
+.detaileMenu_none {
+	display: inline-block;
+    color: rgba(255, 255, 255, 0.3);
+    padding-bottom: 0.46875vw;
+    border-color: rgba(255, 255, 255, 0.7);
+    margin: 0px 2.1875vw;
+    cursor: pointer;
+    font-size: 1.25vw;
+    font-weight: 700;
+    letter-spacing: -0.0390625vw;
+    line-height: 1.71875vw;
+}
+
+.detail .detailWhat {
+	position: absolute;
+    bottom: 0px;
+    left: 0px;
+    z-index: 100;
+    background-image: linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.17) 28%, rgba(0, 0, 0, 0.5) 62%, rgba(0, 0, 0, 0.85) 100%);
+    width: 108%;
+    height: 63.1%;
+    margin-left: -4%;
+}
+
+.detail .detailWhat 
+.detailWhat_p {
+    position: absolute;
+    right: 1.01562vw;
+    bottom: 1.01562vw;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.703125vw;
+    line-height: 0.9375vw;
+    text-align: right;
+    max-width: 22.0312vw;
+}
+
+
+
+/* 비디오 재생 영역 */
+
+.video {
+	position: absolute;
+    z-index: 0;
+    width: 100%;
+    object-fit: contain;
+    visibility: visible;
+    height: 100%;
+}
+
+.controller {
+	display: flex;
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    z-index: 1002;
+    flex-direction: column;
+}
+
+.progressBar {
+	display: flex;
+    position: relative;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    align-items: center;
+    width: 100%;
+    height: 3.6em;
+    padding: 0px 2.2em;
+    transition: opacity 0.1s linear 0s;
+    opacity: 1;
+}
+
+.bar {
+	display: flex;
+	position: relative;
+	cursor: pointer;
+    background-color: rgba(175, 175, 175, 0.17);
+    width: 100%;
+    height: 0.4em;
+    border-radius: 0.2em;
+    transition: height 0.2s ease 0s, top 0.2s ease 0s;
+}
+
+.currentBar {
+	position: absolute;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    background-color: rgb(248, 47, 98);
+}
+
+.progressMove {
+	position: absolute;
+	display: none;
+	background-color: #191a1c;
+	width: 25vw;
+	height: 20vh;
+}
+
+.progressThumbnail {
+	background-size: cover;
+	background-position: center center;
+	background-repeat: no-repeat;
+	opacity: 1;
+	width: 100%;
+	height: 80%;
+	margin-bottom: 0.4em;
+}
+
+.progressTime {
+	color: #FFF;
+	text-align: center;
+	width: 100%;
+	height: 20%;
+}
+
+.nowPlayTime {
+	color: #FFF;
+	text-align: center;
+    width: 5.7em;
+}
+
+.leftPlayTime {
+	color: #FFF;
+	text-align: center;
+    width: 5.7em;
+}
+
+.btn {
+	display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+}
+
+.btn img {
+	width: 30px;
+	height: 30px;
+}
+
+.leftBtn {
+	display: flex;
+}
+
+.leftBtn span {
+	display: flex;
+    cursor: pointer;
+    -webkit-box-pack: end;
+    justify-content: flex-end;
+    align-items: flex-start;
+    width: 5em;
+    height: 3em;
+    padding-right: 0em;
+}
+
+.rightBtn {
+	display: flex;
+}
+
+.rightBtn span {
+	display: flex;
+    cursor: pointer;
+    -webkit-box-pack: start;
+    justify-content: flex-start;
+    width: 6.6em;
+    height: 7em;
+    padding: 0px 0.9em;
+    position: relative;
+}
+
+@media only screen and (max-width:499px){
+	.eachVideo{width:50%;}
+	.eachVideo:hover {width: 65%;}
+	#root{padding: 0 0 0 0;}
+	.navBar{display: none;}
+	.navTop {padding: 0 0 0 0;}
+}
+
+@media only screen and (min-width:500px) and (max-width:799px){
+	.eachVideo{width:33.36%;}	
+	.eachVideo:hover {width: 48%;}
+}
+
+@media only screen and (min-width:800px) and (max-width:999px){
+	.eachVideo{width:25%;}
+	.eachVideo:hover {width: 40%;}
+}
+
+@media only screen and (min-width:1000px) and (max-width:1399px){
+	.eachVideo{width:20%;}
+	.eachVideo:hover {width: 35%;}
+}
+
+@media only screen and (min-width:1400px){
+	.lineVideo{margin-bottom: 1.2968749999999998vw;}
+	.eachVideo{width:16.68%;}
+	.eachVideo:hover {width: 25%;}
+}
