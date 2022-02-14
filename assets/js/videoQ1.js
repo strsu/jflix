@@ -137,6 +137,67 @@ function onProgress(video_) {
  */
  function onTimeupdate(video_) {
     let mediaSource = this;
+
+    console.log("onTimeupdate");
+
+    if(video_.seeking) return;
+
+    let curTime = video_.target.currentTime;
+
+    let curTimeIdx = getCurSeg(curTime, "video");
+
+    let endVideoSeg   = getCurSeg(mediaSource.sourceBuffers[0].buffered.end(0), "video");
+    let endAudioSeg   = getCurSeg(mediaSource.sourceBuffers[1].buffered.end(0), "audio");
+
+    console.log("curTimeIdx, endVideoSeg, endAudioSeg", curTimeIdx, endVideoSeg, endAudioSeg);
+
+    let term = 40;
+    let needF = false;
+
+    if (curTime + term >= mediaSource.sourceBuffers[0].buffered.end(0) || curTime + term >= mediaSource.sourceBuffers[1].buffered.end(0)) needF = true;
+
+    function bufferUpdate() {
+        return new Promise(function (resolve, reject) {
+
+            if(video_.seeking) resolve("nomore");
+
+            // 재생된 버퍼 비우기
+            if(videoDurations[curQ][curTimeIdx-1] + 5 <= curTime) {
+                mediaSource.sourceBuffers[0].remove(0, videoDurations[curQ][curTimeIdx-1])
+            }
+
+            if(audioDurations[curQ][curTimeIdx-1] + 5 <= curTime) {
+                mediaSource.sourceBuffers[1].remove(0, audioDurations[curQ][curTimeIdx-1])
+            }
+
+            if(needF) {
+                resolve("complete");
+            } else {
+                resolve("nomore");
+            }
+        });
+    }
+
+    bufferUpdate()
+    .then(function(response) {
+        if(response == "complete") {
+            if(curTime + term >= mediaSource.sourceBuffers[0].buffered.end(0)) {
+                for(let i=1; i<=videoMaxBufferSize - videoBufferSize; i++) {
+                    videoFetchingList.push(endVideoSeg + i);
+                }
+                appendNextMediaSegment(mediaSource, "video", "onTimeupdate");
+            }
+        
+            if(curTime + term >= mediaSource.sourceBuffers[1].buffered.end(0)) {
+                for(let i=1; i<=audioMaxBufferSize - audioBufferSize; i++) {
+                    audioFetchingList.push(endAudioSeg + i);
+                }
+                appendNextMediaSegment(mediaSource, "audio", "onTimeupdate");
+            }
+
+            needF = false;
+        }
+    });
  }
 
 /**
@@ -156,6 +217,11 @@ function onProgress(video_) {
 function onSeeking(video_) {
     let mediaSource = this;
 
+    // 가끔 video_ 가 undefined로 인식됨.
+    // 글로벌 변수 video도 똑같음.
+    // undefined일 때 이를 해결 할 방법이 필요.
+    // 안 그러면 영상 또는 오디오 데이터를 못 불러온다.
+
     let curVideoIdx = getCurSeg(video_.target.currentTime, "video");
     let curAudioIdx = getCurSeg(video_.target.currentTime, "audio");
 
@@ -173,37 +239,45 @@ function onSeeking(video_) {
                 needFetch = true;
             }
         }
+    } else {
+        needFetch = true;
     }
 
     console.log(curVideoIdx, videoIdx, needFetch);
 
+    function fetchListUpdater() {
+        return new Promise(function(resolve, reject) {
+            // 가져와야 할 seg가 있는데, 이동한 시간의 seg와 다르면 제거
+            videoFetchingList = new Array();
+            audioFetchingList = new Array();
+
+            for(let i=curVideoIdx; i<curVideoIdx+videoMaxBufferSize; i++) {
+                videoFetchingList.push(i);
+            }
+
+            for(let i=curAudioIdx; i<curAudioIdx+audioMaxBufferSize; i++) {
+                audioFetchingList.push(i);
+            }
+
+            // 버퍼를 지우고 새로운 세그먼트를 가져온다.
+            //mediaSource.sourceBuffers[0].remove(0, mediaSource.sourceBuffers[0].buffered.end(0))
+            videoBufferSize = 0;
+            audioBufferSize = 0;
+
+            resolve("complete");
+        });
+    }
+
     if(needFetch) {
         needFetch = false;
 
-        // 가져와야 할 seg가 있는데, 이동한 시간의 seg와 다르면 제거
-        for(let i=0; i<videoFetchingList.length; i++) {
-            videoFetchingList.shift();
-        }
-
-        for(let i=0; i<audioFetchingList.length; i++) {
-            audioFetchingList.shift();
-        }
-
-        for(let i=curVideoIdx; i<curVideoIdx+videoMaxBufferSize; i++) {
-            videoFetchingList.push(i);
-        }
-
-        for(let i=curAudioIdx; i<curAudioIdx+audioMaxBufferSize; i++) {
-            audioFetchingList.push(i);
-        }
-
-        // 버퍼를 지우고 새로운 세그먼트를 가져온다.
-        //mediaSource.sourceBuffers[0].remove(0, mediaSource.sourceBuffers[0].buffered.end(0))
-        videoBufferSize = 0;
-        audioBufferSize = 0;
-
-        appendNextMediaSegment(mediaSource, "audio");
-        appendNextMediaSegment(mediaSource, "video");
+        fetchListUpdater()
+        .then(function(response) {
+            if(response == "complete") {
+                appendNextMediaSegment(mediaSource, "audio", "onSeeking");
+                appendNextMediaSegment(mediaSource, "video", "onSeeking");
+            }
+        });
     }
 }
 
@@ -250,12 +324,12 @@ function loadInitSeg(mediaSource) {
         state = 'play';
 
         param.duration = videoDurations[curQ][videoDurations[curQ].length-1];
-        appendNextMediaSegment(param, 'video');
+        appendNextMediaSegment(param, 'video', "loadInitSeg");
         
         loadInit(param, 'audio')
         .then(function(param) {
             isInitFinish = true;
-            appendNextMediaSegment(param, 'audio');
+            appendNextMediaSegment(param, 'audio', "loadInitSeg");
         }, function (err) {
             console.error(err);
         });
@@ -265,7 +339,7 @@ function loadInitSeg(mediaSource) {
     });
 }
 
-function appendNextMediaSegment(mediaSource, type='video') {
+function appendNextMediaSegment(mediaSource, type='video', from="") {
 
     // 세그먼트 추가 불가 할 경우
     if (mediaSource.readyState == "closed") return console.log('close');
@@ -276,7 +350,7 @@ function appendNextMediaSegment(mediaSource, type='video') {
         if (audioFetchingList.length == 0) return console.log("No more need to fetch audio segment");
         if (audioBufferSize >= audioMaxBufferSize) return console.log('audioBufferSize', audioBufferSize);
         if (mediaSource.sourceBuffers[1].updating) {
-            setTimeout(appendNextMediaSegment, 100, mediaSource, type);
+            setTimeout(appendNextMediaSegment, 100, mediaSource, type, "appendNextMediaSegment");
             return console.log('audio updating');
         }
 
@@ -285,11 +359,16 @@ function appendNextMediaSegment(mediaSource, type='video') {
         if (videoFetchingList.length == 0) return console.log("No more need to fetch video segment");
         if (videoBufferSize >= videoMaxBufferSize) return console.log('videoBufferSize', videoBufferSize);
         if (mediaSource.sourceBuffers[0].updating) {
-            setTimeout(appendNextMediaSegment, 100, mediaSource, type);
+            setTimeout(appendNextMediaSegment, 100, mediaSource, type, "appendNextMediaSegment");
             return console.log('video updating');
         }
 
         if (videoFetchingList[0] > videoDurations[curQ].length) return console.log("out of index");
+    }
+
+    // onTimeupdate에서 호출된 경우
+    if(from == "onTimeupdate") {
+        
     }
 
 
@@ -314,7 +393,8 @@ function appendNextMediaSegment(mediaSource, type='video') {
                     console.log('endOfStream');
                     reject('endOfStream');
                 } else {
-                    resolve(response);
+                    if(type == "audio") resolve(response, audioIdx);
+                    else resolve(response);
                 }
             }).catch((err)=>{
                 reject(err);
@@ -324,6 +404,13 @@ function appendNextMediaSegment(mediaSource, type='video') {
 
     addSeg(mediaSource, type)
     .then(function(response) {
+        /*
+            updateend 이벤트가 실패를 하든 성공을 하든 둘 다 호출됨.
+            버퍼 삽입 실패를 잡을 수 없음.
+            더욱이 이벤트에서 appendNextMediaSegment 함수를 호출하면
+            같은 세그먼트를 여러번 호출해서 오류가 남
+            즉, 512 seg를 수차례 fetch -> insert 를 겪에 됨.
+        */
         if(type == 'audio') {
             mediaSource.sourceBuffers[1].appendBuffer(response);
         } else {
@@ -371,7 +458,7 @@ function appendNextMediaSegment(mediaSource, type='video') {
                     videoFetchingList.push(videoIdx);
                     setTimeout(appendNextMediaSegment, 500, mediaSource, type);
                 }
-            }*/
+        }*/
     })
     .then(function(result) {
         if(result == "audio") {
@@ -382,7 +469,7 @@ function appendNextMediaSegment(mediaSource, type='video') {
             console.log("video success", videoIdx, videoBufferSize);
         }
         //appendNextMediaSegment(mediaSource, type);
-        setTimeout(appendNextMediaSegment, 100, mediaSource, type);
+        setTimeout(appendNextMediaSegment, 100, mediaSource, type, "appendNextMediaSegment");
     })
     .catch(function (err) {
         // https://stackoverflow.com/questions/34970272/invalidstateerror-an-attempt-was-made-to-use-an-object-that-is-not-or-is-no-lo
@@ -390,13 +477,17 @@ function appendNextMediaSegment(mediaSource, type='video') {
         if(err != 'endOfStream') {
             if(type == 'audio') {
                 console.error('err', err, type, audioIdx, audioBufferSize);
+                console.log("b", audioFetchingList);
                 audioFetchingList.unshift(audioIdx);
+                console.log("a", audioFetchingList);
             } else {
                 console.error('err', err, type, videoIdx, videoBufferSize);
+                console.log("b", videoFetchingList);
                 videoFetchingList.unshift(videoIdx);
+                console.log("b", videoFetchingList);
             }
             //appendNextMediaSegment(mediaSource, type);
-            setTimeout(appendNextMediaSegment, 100, mediaSource, type);
+            setTimeout(appendNextMediaSegment, 100, mediaSource, type, "appendNextMediaSegment");
         }
     });
     
