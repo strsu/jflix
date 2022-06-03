@@ -16,7 +16,7 @@
                 <span><button onclick="qChanger(2)">640</button></span>
                 <span><button onclick="qChanger(3)">1280</button></span>
             </span>
-            <script src="assets/js/videoQ1.js" defer></script>
+            <script src="assets/js/videoQ2.js" defer></script>
         </div>
     </body>
 </html>

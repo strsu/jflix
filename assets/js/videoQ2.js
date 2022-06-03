@@ -28,8 +28,8 @@ let lastAppendAudioSeg = 0;
 // 5분 = 300초
 const videoMaxBufferSize = 30;
 const audioMaxBufferSize = 30;
-let videoBufferSize = 0;
-let audioBufferSize = 0;
+let videoBufferSize = new Array();
+let audioBufferSize = new Array();
 
 let needFetch = false;
 let videoFetchingList = new Array();
@@ -74,6 +74,14 @@ function initMedia() {
     GmediaSource = mediaSource;
     
     mediaSource.addEventListener('sourceopen', onSourceOpen);
+
+    for(let i=0; i<videoDurations[curQ].length; i++) {
+        videoBufferSize.push(0);
+    }
+
+    for(let i=0; i<audioDurations[curQ].length; i++) {
+        audioBufferSize.push(0);
+    }
 }
 
 function onSourceOpen (_) {
@@ -150,10 +158,17 @@ function onProgress(video_) {
 
     let endVideoSeg   = getCurSeg(mediaSource.sourceBuffers[0].buffered.end(0), "video");
     let endAudioSeg   = getCurSeg(mediaSource.sourceBuffers[1].buffered.end(0), "audio");
+    /*
+        mediaSource.sourceBuffers[0].buffered.end(0)
+        사실 mediaSource에 버퍼는 즉각적으로 갱신이 안 되는 것 같다.
+        실제로는 불러온 세그먼트지만, 버퍼에 아직 정상적으로 적용이 안 되서 안 가져온 세그먼트라 판단할 가능성이 높다.
+        때문에 전체 세그먼트수 만큼의 메모리를 할당 받아서, 가져온 세그먼트는 1, 안 가져온 세그먼트는 0으로 표기하는
+        방식을 이용해서 버퍼를 관리하려고 한다/    
+    */
 
-    console.log("curTimeIdx, endVideoSeg, endAudioSeg", curTimeIdx, endVideoSeg, endAudioSeg);
+    //console.log("curTimeIdx, endVideoSeg, endAudioSeg", curTimeIdx, endVideoSeg, endAudioSeg);
 
-    let term = 40;
+    let term = 80;
     let needF = false;
 
     if (curTime + term >= mediaSource.sourceBuffers[0].buffered.end(0) || 
@@ -185,19 +200,20 @@ function onProgress(video_) {
 
     bufferUpdate()
     .then(function(response) {
-        console.log('response:', response);
+        console.log('response:', response, needF, getCurSeg(curTime, "video"), endVideoSeg, getCurSeg(curTime, "audio"), endAudioSeg);
         if(response == "complete") {
             if(curTime + term >= mediaSource.sourceBuffers[0].buffered.end(0)) {
-                for(let i=1; i<=videoMaxBufferSize - videoBufferSize; i++) {
+                for(let i=1; i<=videoMaxBufferSize - endVideoSeg + getCurSeg(curTime, "video"); i++) {
                     videoFetchingList.push(endVideoSeg + i);
                 }
                 appendNextMediaSegment(mediaSource, "video", "onTimeupdate");
             }
         
             if(curTime + term >= mediaSource.sourceBuffers[1].buffered.end(0)) {
-                for(let i=1; i<=audioMaxBufferSize - audioBufferSize; i++) {
+                for(let i=1; i<=audioMaxBufferSize - endAudioSeg + getCurSeg(curTime, "audio"); i++) {
                     audioFetchingList.push(endAudioSeg + i);
                 }
+                console.log('@@', audioFetchingList.length);
                 appendNextMediaSegment(mediaSource, "audio", "onTimeupdate");
             }
 
@@ -423,56 +439,20 @@ function appendNextMediaSegment(mediaSource, type='video', from="") {
             mediaSource.sourceBuffers[0].appendBuffer(response);
         }
         return type;
-        /*if(type == 'audio') {
-            let AppendAudioHandler = function(e) {
-                let sourceBuffer = e.target;
-                sourceBuffer.removeEventListener("updateend", AppendAudioHandler);
-                audioBufferSize += 1;
-                console.log("audio success", audioBufferSize);
-                appendNextMediaSegment(mediaSource, type);
-            };
-            try {
-                mediaSource.sourceBuffers[1].addEventListener("updateend", AppendAudioHandler);
-                mediaSource.sourceBuffers[1].appendBuffer(response);
-            } catch (err) {
-                console.error(err, 'audio', audioIdx);
-                audioBufferSize -= 1;
-                if(err.toString().includes("quota")) {
-                    appendNextMediaSegment(mediaSource, type);
-                } else if(audioIdx != undefined) {
-                    audioFetchingList.push(audioIdx);
-                    setTimeout(appendNextMediaSegment, 500, mediaSource, type);
-                }
-            }
-        } else {
-            let AppendVideoHandler = function(e) {
-                let sourceBuffer = e.target;
-                sourceBuffer.removeEventListener("updateend", AppendVideoHandler);
-                videoBufferSize += 1;
-                console.log("video success", videoBufferSize);
-                appendNextMediaSegment(mediaSource, type);
-            };
-            try {
-                mediaSource.sourceBuffers[0].addEventListener("updateend", AppendVideoHandler);
-                mediaSource.sourceBuffers[0].appendBuffer(response);
-            } catch (err) {
-                console.error(err, 'video', videoIdx);
-                videoBufferSize -= 1;
-                if(err.toString().includes("quota")) {
-                    appendNextMediaSegment(mediaSource, type);
-                } else if(videoIdx != undefined) {
-                    videoFetchingList.push(videoIdx);
-                    setTimeout(appendNextMediaSegment, 500, mediaSource, type);
-                }
-        }*/
     })
     .then(function(result) {
         if(result == "audio") {
-            audioBufferSize += 1;
-            console.log("audio success", audioIdx, audioBufferSize);
+            audioBufferSize[audioIdx-1] = 1;
+            //console.log("audio success", audioIdx, audioBufferSize);
         } else {
-            videoBufferSize += 1;
-            console.log("video success", videoIdx, videoBufferSize);
+            videoBufferSize[videoIdx-1] = 1;
+            for(let i=0; i<mediaSource.sourceBuffers[0].buffered.length; i++) {
+                console.log("video success", videoIdx, 
+                    mediaSource.sourceBuffers[0].buffered.start(i),
+                    mediaSource.sourceBuffers[0].buffered.end(i)
+                );
+            }
+            
         }
         //appendNextMediaSegment(mediaSource, type);
         setTimeout(appendNextMediaSegment, 100, mediaSource, type, "appendNextMediaSegment");
