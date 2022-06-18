@@ -9,7 +9,7 @@
 ![image](https://user-images.githubusercontent.com/25381921/174421391-cf436ab5-6f4a-41a8-ab91-662a8de5cf32.png)
 
 ### dash를 이용하는 방법
-![image](https://user-images.githubusercontent.com/25381921/174422038-27f68975-3ba0-4422-96a2-268ce145cd2b.png)   
+![image](https://user-images.githubusercontent.com/25381921/174423032-eeb9138e-a845-4032-999f-acadb2159560.png)   
 일반적으로 dash 방식을 이용하기 위해서는 mdp파일이 필요하다.    
 ffmpeg라는 프로그램을 사용하면 mdp파일 및 영상이 생성된다.    
 
