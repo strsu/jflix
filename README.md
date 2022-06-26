@@ -28,7 +28,8 @@
  초기에는 MPEG 확장자를 확용했던 거 같은데, 요즘에는 MP4 확장자를 주로 이용하는 것으로 알고있습니다.   
 
 ### #2.2 브라우저 별 지원하는 영상 코덱 종류   
-![image](https://user-images.githubusercontent.com/25381921/174421391-cf436ab5-6f4a-41a8-ab91-662a8de5cf32.png)
+![image](https://user-images.githubusercontent.com/25381921/174421391-cf436ab5-6f4a-41a8-ab91-662a8de5cf32.png)    
+![image](https://user-images.githubusercontent.com/25381921/175798595-ad307e06-62db-4641-97df-77c5c70ee6e6.png)     
  브라우저 별로 지원하는 영상/음성 코덱의 종류가 다르고, 또 브라우저 별 영상을 저장할 수 있는 버퍼 사이즈가 다르기 때문에,    
  이에 유념해서 코딩을 해야한다.   
 
