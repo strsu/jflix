@@ -7,7 +7,7 @@ from multiprocessing import Process
 workdir = os.path.dirname(os.path.realpath(__file__))
 
 videoPath = r'D:\dataset\a\yy'
-videoName = 'MIDV-024.mp4'
+videoName = 'video.mp4'
 savePath = os.path.join(r'D:\tomcat_1\webapps\ROOT\media\res', videoName[:-4])
 
 def get_length(input_video):
